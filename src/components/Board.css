@@ -1,0 +1,20 @@
+@import "../constants.css";
+
+.tiles {
+  display: grid;
+  grid-template-rows: repeat(4, var(--tile-size));
+  grid-template-columns: repeat(3, var(--tile-size));
+}
+
+.tile {
+  width: var(--tile-size);
+  height: var(--tile-size);
+}
+
+.tile-light {
+  background-color: var(--light-tile);
+}
+
+.tile-dark {
+  background-color: var(--dark-tile);
+}
