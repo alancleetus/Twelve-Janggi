@@ -13,9 +13,9 @@
   min-height: 62px;
   margin-bottom: 10px;
 }
-.player-tile {
-  min-width: 50px;
-  min-height: 50px;
+.piece-icon {
+  max-width: 50px;
+  max-height: 50px;
   text-align: center;
   border: 1px solid red;
   margin-right: 2px;

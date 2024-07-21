@@ -1,17 +1,28 @@
 import "./Player.css";
 const Player = ({ playerId }) => {
+  const dragStart = (e) => {
+    e.dataTransfer.effectAllowed = "move";
+    setTimeout(() => (e.target.style.display = "none"), 0);
+    e.dataTransfer.setData("text/plain", `${piece},-1,-1`);
+    console.log(e);
+  };
+  const dragEnd = (e) => (e.target.style.display = "block");
+
+  const piece = "Man-white";
+
   return (
     <div className="player-area">
       <p>Player_{playerId}</p>
 
       <div className="player-box">
-        {/* <div className="player-tile">test</div>  */}
-        <div className="player-tile" draggable>
-          test
-        </div>
-        <div className="player-tile" draggable>
-          test
-        </div>
+        <img
+          draggable
+          onDragStart={dragStart}
+          onDragEnd={dragEnd}
+          className={`piece-icon ${piece}`}
+          src={`./assets/${piece}.png`}
+          alt={piece}
+        />
       </div>
     </div>
   );
