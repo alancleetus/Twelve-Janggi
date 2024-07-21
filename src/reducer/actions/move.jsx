@@ -1,6 +1,7 @@
+import actionTypes from "../actionType";
 export default function makeNewMove({ newPosition }) {
   return {
-    type: "NEW_MOVE",
+    type: actionTypes.NEW_MOVE,
     payload: { newPosition },
   };
 }

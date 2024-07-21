@@ -1,12 +1,21 @@
+import actionTypes from "./actionType";
+
 export const reducer = (state, action) => {
   switch (action.type) {
-    case "NEW_MOVE": {
+    case actionTypes.NEW_MOVE: {
+      let { turn, position } = state;
+
+      // toggle turn
+      turn = turn === "white" ? "black" : "white";
+      position = [...position, action.payload.newPosition];
+
       return {
         ...state,
-        position: action.payload.newPosition,
+        turn,
+        position: position,
       };
     }
-    case "CAPTURE_PIECE": {
+    case actionTypes.CAPTURE_PIECE: {
       if (action.payload.capturerColor === "black") {
         return {
           ...state,
@@ -20,7 +29,7 @@ export const reducer = (state, action) => {
       }
       break;
     }
-    case "USE_CAPTURED": {
+    case actionTypes.MOVE_CAPTURED: {
       console.log(action.payload);
       if (action.payload.actorColor === "black") {
         return {
