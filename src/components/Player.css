@@ -1,0 +1,17 @@
+.player-box {
+  display: flex;
+  flex-direction: row;
+
+  background: #242424;
+  padding: 10px;
+  box-shadow: inset #101010 0px 0px 60px -12px;
+  width: 300px;
+  overflow-x: scroll;
+}
+.player-tile {
+  min-width: 50px;
+  min-height: 50px;
+  text-align: center;
+  border: 1px solid red;
+  margin-right: 2px;
+}
