@@ -1,4 +1,5 @@
 import "./Pieces.css";
+import Piece from "./Piece";
 
 const Pieces = () => {
   const position = [
@@ -9,21 +10,21 @@ const Pieces = () => {
   ];
   console.log(position);
 
-  position[0][0] = "minister-black";
-  position[0][1] = "king-black";
-  position[0][2] = "general-black";
-  position[1][1] = "man-black";
+  position[0][0] = "General-black";
+  position[0][1] = "King-black";
+  position[0][2] = "Minister-black";
+  position[1][1] = "Man-black";
 
-  position[3][2] = "minister-white";
-  position[3][1] = "king-white";
-  position[3][0] = "general-white";
-  position[2][1] = "man-white";
+  position[2][1] = "Man-white";
+  position[3][0] = "Minister-white";
+  position[3][2] = "General-white";
+  position[3][1] = "King-white";
 
   return (
     <div className="pieces">
       {position.map((row, i) =>
         row.map((col, j) => {
-          return position[i][j] ? position[i][j] : null;
+          return <Piece key={i + j} row={i} col={j} piece={position[i][j]} />;
         })
       )}
     </div>
