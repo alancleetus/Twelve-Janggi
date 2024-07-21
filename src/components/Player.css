@@ -5,11 +5,13 @@
   background: #242424;
   padding: 10px;
   box-shadow: inset #101010 0px 0px 60px -12px;
-  width: 300px;
+
   overflow-x: scroll;
+  max-width: 100%;
 
   scrollbar-width: thin;
   min-height: 62px;
+  margin-bottom: 10px;
 }
 .player-tile {
   min-width: 50px;
