@@ -18,3 +18,24 @@
 .tile-dark {
   background-color: var(--dark-tile);
 }
+
+.board {
+  display: grid;
+  grid-template-columns: calc(0.25 * var(--tile-size)) calc(
+      3 * var(--tile-size)
+    );
+}
+.col-labels-grid {
+  height: calc(0.25 * var(--tile-size));
+  grid-column: 2;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.row-labels-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
