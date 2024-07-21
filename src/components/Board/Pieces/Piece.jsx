@@ -1,6 +1,6 @@
 import "./Piece.css";
 
-export default function Piece({ row, col, piece, setPosition }) {
+export default function Piece({ row, col, piece }) {
   const dragStart = (e) => {
     e.dataTransfer.effectAllowed = "move";
     setTimeout(() => (e.target.style.display = "none"), 0);
