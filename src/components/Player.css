@@ -7,6 +7,9 @@
   box-shadow: inset #101010 0px 0px 60px -12px;
   width: 300px;
   overflow-x: scroll;
+
+  scrollbar-width: thin;
+  min-height: 62px;
 }
 .player-tile {
   min-width: 50px;
