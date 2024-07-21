@@ -7,8 +7,7 @@ export default function Piece({ row, col, piece }) {
     e.dataTransfer.setData("text/plain", `${piece},${row},${col}`);
     console.log(e);
   };
-  const dragEnd = (e) =>
-    setTimeout(() => (e.target.style.display = "block"), 0);
+  const dragEnd = (e) => (e.target.style.display = "block");
   return (
     <img
       draggable
