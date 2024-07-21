@@ -1,7 +1,7 @@
 import { createPosition } from "./helper";
 
 export const initGame = {
-  position: createPosition(),
+  position: [createPosition()],
   turn: "white",
   whiteCapturedPieces: [],
   blackCapturedPieces: [],

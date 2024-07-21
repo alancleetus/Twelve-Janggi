@@ -13,7 +13,7 @@ const Pieces = () => {
   //const [position, setPosition] = useState(createPosition);
   const { appState, dispatch } = useAppContext();
 
-  const currPosition = appState.position;
+  const currPosition = appState.position[appState.position.length - 1];
   const currWhiteCaptured = appState.whiteCapturedPieces;
   const currBlackCaptured = appState.blackCapturedPieces;
 
