@@ -6,6 +6,7 @@ import { useAppContext } from "../../../contexts/Context";
 import makeNewMove from "../../../reducer/actions/move";
 import capturePiece from "../../../reducer/actions/capture";
 import moveCaptured from "../../../reducer/actions/moveCaptured";
+import clearCandidates from "../../../reducer/actions/clearCandidateMoves";
 
 const Pieces = () => {
   const ref = useRef();
@@ -97,6 +98,8 @@ const Pieces = () => {
 
       dispatch(makeNewMove({ newPosition }));
     }
+
+    dispatch(clearCandidates());
   };
 
   const dragOver = (e) => e.preventDefault();

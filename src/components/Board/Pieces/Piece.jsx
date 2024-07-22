@@ -29,8 +29,6 @@ export default function Piece({ row, col, piece }) {
   };
   const dragEnd = (e) => {
     e.target.style.display = "block";
-
-    dispatch(generateCandidateMoves({ newCandidateMoves: [] }));
   };
   return (
     <img

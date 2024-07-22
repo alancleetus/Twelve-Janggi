@@ -25,9 +25,6 @@ const Player = ({ playerId }) => {
   };
   const dragEnd = (e) => {
     e.target.style.display = "block";
-    console.log(e);
-    console.log("player box drag end");
-    dispatch(generateCandidateMoves({ newCandidateMoves: [] }));
   };
 
   return (
