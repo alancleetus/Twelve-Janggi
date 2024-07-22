@@ -5,4 +5,5 @@ export const initGame = {
   turn: "white",
   whiteCapturedPieces: [],
   blackCapturedPieces: [],
+  candidateMoves: [],
 };

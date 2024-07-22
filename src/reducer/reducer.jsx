@@ -45,6 +45,12 @@ export const reducer = (state, action) => {
 
       break;
     }
+    case actionTypes.CANDIDATE_MOVE: {
+      return {
+        ...state,
+        candidateMoves: action.payload.newCandidateMoves,
+      };
+    }
     default:
       return state;
   }
