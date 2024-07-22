@@ -17,8 +17,6 @@ const Pieces = () => {
   const currWhiteCaptured = appState.whiteCapturedPieces;
   const currBlackCaptured = appState.blackCapturedPieces;
 
-  console.log(appState);
-
   const calculateCoords = (e) => {
     // coords for where the piece was dropped
     const clientX = e.clientX;
@@ -42,85 +40,63 @@ const Pieces = () => {
     const newPosition = copyPosition(currPosition);
     const { x, y } = calculateCoords(e);
 
-    console.log(`Moving ${piece} from ${row}-${col} to ${x}-${y}`);
+    if (appState.candidateMoves?.find((m) => m[0] === x && m[1] === y)) {
+      console.log(`Moving ${piece} from ${row}-${col} to ${x}-${y}`);
 
-    if (x == row && y == col) {
-      console.log("nothing changed");
-      return;
-    }
-
-    //when moving captured piece
-    if (row == -1 && col == -1) {
-      // captured pieces cannot be moved into player territory
-      if (x == 0 || x == 3) {
-        console.log(
-          "Illegal move: captured piece can only be moved into middle 2 rows"
-        );
-        return;
+      //when moving captured piece
+      if (row == -1 && col == -1) {
+        if (piece.includes("white")) {
+          dispatch(
+            moveCaptured({
+              newCapturedList: currWhiteCaptured.filter((piece, i) => {
+                return index != i;
+              }),
+              actorColor: "white",
+            })
+          );
+        } else if (piece.includes("black")) {
+          dispatch(
+            moveCaptured({
+              newCapturedList: currBlackCaptured.filter((piece, i) => {
+                return index != i;
+              }),
+              actorColor: "black",
+            })
+          );
+        }
       }
-      //captured pieces can only be moved into empty spaces
+      //moving board piece and not captured piece
+      if (row > -1 && col > -1) newPosition[row][col] = "";
+      newPosition[x][y] = piece;
+
+      // if move location already has piece
       if (currPosition[x][y] !== "") {
-        console.log(
-          "Illegal move: captured piece can only be moved into empty space"
-        );
-        return;
+        let capturedPiece = currPosition[x][y];
+
+        if (capturedPiece.includes("white"))
+          dispatch(
+            capturePiece({
+              newCapturedList: [
+                ...currBlackCaptured,
+                capturedPiece.replace("white", "black"),
+              ],
+              capturerColor: "black",
+            })
+          );
+        else
+          dispatch(
+            capturePiece({
+              newCapturedList: [
+                ...currWhiteCaptured,
+                capturedPiece.replace("black", "white"),
+              ],
+              capturerColor: "white",
+            })
+          );
       }
-      if (piece.includes("white")) {
-        dispatch(
-          moveCaptured({
-            newCapturedList: currWhiteCaptured.filter((piece, i) => {
-              console.log(index);
-              console.log(i);
-              return index != i;
-            }),
-            actorColor: "white",
-          })
-        );
-      } else if (piece.includes("black")) {
-        dispatch(
-          moveCaptured({
-            newCapturedList: currBlackCaptured.filter((piece, i) => {
-              console.log(index);
-              console.log(i);
-              return index != i;
-            }),
-            actorColor: "black",
-          })
-        );
-      }
+
+      dispatch(makeNewMove({ newPosition }));
     }
-
-    //moving board piece and not captured piece
-    if (row > -1 && col > -1) newPosition[row][col] = "";
-    newPosition[x][y] = piece;
-
-    // if move location already has piece
-    if (currPosition[x][y] !== "") {
-      let capturedPiece = currPosition[x][y];
-
-      if (capturedPiece.includes("white"))
-        dispatch(
-          capturePiece({
-            newCapturedList: [
-              ...currBlackCaptured,
-              capturedPiece.replace("white", "black"),
-            ],
-            capturerColor: "black",
-          })
-        );
-      else
-        dispatch(
-          capturePiece({
-            newCapturedList: [
-              ...currWhiteCaptured,
-              capturedPiece.replace("black", "white"),
-            ],
-            capturerColor: "white",
-          })
-        );
-    }
-
-    dispatch(makeNewMove({ newPosition }));
   };
 
   const dragOver = (e) => e.preventDefault();
