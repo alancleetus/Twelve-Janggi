@@ -7,7 +7,8 @@
   box-shadow: inset #101010 0px 0px 60px -12px;
 
   overflow-x: scroll;
-  max-width: 100%;
+  max-width: calc(var(--tile-size) * 3);
+  margin-left: calc(var(--tile-size) * 0.25);
 
   scrollbar-width: thin;
   min-height: 62px;
