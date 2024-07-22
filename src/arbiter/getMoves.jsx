@@ -162,7 +162,7 @@ const getFeudalLordMoves = ({ currPosition, piece, row, col }) => {
   const us = piece.includes("white") ? "white" : "black";
   const enemy = us.includes("white") ? "black" : "white";
   const directions =
-    us === "black"
+    us === "white"
       ? [
           [1, -1],
           [1, 1],

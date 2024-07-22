@@ -16,7 +16,6 @@ export const reducer = (state, action) => {
       };
     }
     case actionTypes.CAPTURE_PIECE: {
-      console.log("reducer");
       const piece = action.payload.piece;
       const x = action.payload.x;
       const y = action.payload.y;
@@ -27,6 +26,9 @@ export const reducer = (state, action) => {
       // if move location already has piece,capture that piece
       if (currPosition[x][y] !== "") {
         let capturedPiece = currPosition[x][y];
+
+        //when Feudal_Lord gets captures it changes to Man
+        capturedPiece = capturedPiece.replace("Feudal-Lord", "Man");
 
         // when a piece gets captured it's color swaps
         capturedPiece = capturedPiece.includes("white")

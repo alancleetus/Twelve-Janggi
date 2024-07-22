@@ -64,10 +64,16 @@ const Pieces = () => {
 
       //moving board piece and not captured piece
       if (row > -1 && col > -1) newPosition[row][col] = ""; //remove piece being moved from old position
-      newPosition[x][y] = piece; // place piece onto new position
+
+      if (piece.includes("Man") && (x == 0 || x == 3)) {
+        console.log("promoting");
+        newPosition[x][y] = piece.replace("Man", "Feudal-Lord"); // promote man to feudal lord
+      } else newPosition[x][y] = piece; // place piece onto new position
+
       if (currPosition[x][y] !== "") {
         dispatch(capturePiece({ piece, x, y }));
       }
+
       dispatch(makeNewMove({ newPosition }));
     }
 
