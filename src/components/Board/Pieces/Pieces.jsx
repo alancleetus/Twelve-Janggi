@@ -13,7 +13,6 @@ const Pieces = () => {
 
   //const [position, setPosition] = useState(createPosition);
   const { appState, dispatch } = useAppContext();
-
   const currPosition = appState.position[appState.position.length - 1];
   const currWhiteCaptured = appState.whiteCapturedPieces;
   const currBlackCaptured = appState.blackCapturedPieces;
@@ -41,12 +40,13 @@ const Pieces = () => {
     const newPosition = copyPosition(currPosition);
     const { x, y } = calculateCoords(e);
 
-    // if piece has movable tiles
+    // check for valid move
     if (appState.candidateMoves?.find((m) => m[0] === x && m[1] === y)) {
       console.log(`Moving ${piece} from ${row}-${col} to ${x}-${y}`);
 
-      //when moving captured piece, remove captured piece from captured list
+      // if moving captured piece
       if (row == -1 && col == -1) {
+        // remove captured piece from captured list
         const actorColor = piece.includes("white") ? "white" : "black";
         const newCapturedList = (
           piece.includes("white") ? currWhiteCaptured : currBlackCaptured
@@ -65,34 +65,9 @@ const Pieces = () => {
       //moving board piece and not captured piece
       if (row > -1 && col > -1) newPosition[row][col] = ""; //remove piece being moved from old position
       newPosition[x][y] = piece; // place piece onto new position
-
-      // if move location already has piece
       if (currPosition[x][y] !== "") {
-        let capturedPiece = currPosition[x][y];
-
-        // when a piece gets captured it's color swaps
-        if (capturedPiece.includes("white"))
-          dispatch(
-            capturePiece({
-              newCapturedList: [
-                ...currBlackCaptured,
-                capturedPiece.replace("white", "black"),
-              ],
-              capturerColor: "black",
-            })
-          );
-        else
-          dispatch(
-            capturePiece({
-              newCapturedList: [
-                ...currWhiteCaptured,
-                capturedPiece.replace("black", "white"),
-              ],
-              capturerColor: "white",
-            })
-          );
+        dispatch(capturePiece({ piece, x, y }));
       }
-
       dispatch(makeNewMove({ newPosition }));
     }
 

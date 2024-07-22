@@ -16,19 +16,44 @@ export const reducer = (state, action) => {
       };
     }
     case actionTypes.CAPTURE_PIECE: {
-      if (action.payload.capturerColor === "black") {
-        return {
-          ...state,
-          blackCapturedPieces: action.payload.newCapturedList,
-        };
-      } else if (action.payload.capturerColor === "white") {
-        return {
-          ...state,
-          whiteCapturedPieces: action.payload.newCapturedList,
-        };
+      console.log("reducer");
+      const piece = action.payload.piece;
+      const x = action.payload.x;
+      const y = action.payload.y;
+      const currPosition = state.position[state.position.length - 1];
+      const currWhiteCaptured = state.whiteCapturedPieces;
+      const currBlackCaptured = state.blackCapturedPieces;
+
+      // if move location already has piece,capture that piece
+      if (currPosition[x][y] !== "") {
+        let capturedPiece = currPosition[x][y];
+
+        // when a piece gets captured it's color swaps
+        capturedPiece = capturedPiece.includes("white")
+          ? capturedPiece.replace("white", "black")
+          : capturedPiece.replace("black", "white");
+
+        // add captured piece to list of captured pieces for the correct player
+        const newCapturedList = [
+          ...(piece.includes("white") ? currWhiteCaptured : currBlackCaptured),
+          capturedPiece,
+        ];
+
+        if (state.turn === "black") {
+          return {
+            ...state,
+            blackCapturedPieces: newCapturedList,
+          };
+        } else if (state.turn === "white") {
+          return {
+            ...state,
+            whiteCapturedPieces: newCapturedList,
+          };
+        }
       }
       break;
     }
+
     case actionTypes.MOVE_CAPTURED: {
       console.log(action.payload);
       if (action.payload.actorColor === "black") {

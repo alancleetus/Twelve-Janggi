@@ -1,7 +1,11 @@
 import actionTypes from "../actionType";
-export default function capturePiece({ newCapturedList, capturerColor }) {
+
+const capturePiece = ({ piece, x, y }) => {
+  console.log("reducer1");
   return {
     type: actionTypes.CAPTURE_PIECE,
-    payload: { newCapturedList, capturerColor },
+    payload: { piece, x, y },
   };
-}
+};
+
+export default capturePiece;
