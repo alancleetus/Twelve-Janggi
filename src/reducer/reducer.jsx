@@ -55,18 +55,15 @@ export const reducer = (state, action) => {
     }
 
     case actionTypes.MOVE_CAPTURED: {
-      console.log(action.payload);
-      if (action.payload.actorColor === "black") {
-        return {
-          ...state,
-          blackCapturedPieces: action.payload.newCapturedList,
-        };
-      } else if (action.payload.actorColor === "white") {
-        return {
-          ...state,
-          whiteCapturedPieces: action.payload.newCapturedList,
-        };
-      }
+      return state.turn === "black"
+        ? {
+            ...state,
+            blackCapturedPieces: action.payload.newCapturedList,
+          }
+        : {
+            ...state,
+            whiteCapturedPieces: action.payload.newCapturedList,
+          };
 
       break;
     }

@@ -37,6 +37,7 @@ const Pieces = () => {
     // position of piece being moved
     const [piece, row, col, index] = e.dataTransfer.getData("text").split(",");
 
+    //calculating new position
     const newPosition = copyPosition(currPosition);
     const { x, y } = calculateCoords(e);
 
@@ -47,9 +48,9 @@ const Pieces = () => {
       // if moving captured piece
       if (row == -1 && col == -1) {
         // remove captured piece from captured list
-        const actorColor = piece.includes("white") ? "white" : "black";
+
         const newCapturedList = (
-          piece.includes("white") ? currWhiteCaptured : currBlackCaptured
+          appState.turn === "white" ? currWhiteCaptured : currBlackCaptured
         ).filter((piece, i) => {
           return index != i;
         });
@@ -57,7 +58,6 @@ const Pieces = () => {
         dispatch(
           moveCaptured({
             newCapturedList: newCapturedList,
-            actorColor: actorColor,
           })
         );
       }
