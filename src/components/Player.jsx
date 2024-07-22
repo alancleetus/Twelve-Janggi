@@ -35,7 +35,7 @@ const Player = ({ playerId }) => {
         <div className="player-box">
           {currWhiteCaptured.map((piece, index) => (
             <img
-              key={playerId + piece}
+              key={playerId + piece + index}
               draggable={playerId == turn}
               onDragStart={(e) => dragStart(e, piece, index)}
               onDragEnd={(e) => dragEnd(e)}
