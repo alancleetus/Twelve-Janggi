@@ -3,9 +3,32 @@ import { getChar, getTileColor } from "../../helper";
 import Pieces from "./Pieces/Pieces";
 import RowLabel from "./Labels/RowLabel";
 import ColLabel from "./Labels/ColLabel";
+import { useAppContext } from "../../contexts/Context";
 function Board() {
   const cols = [0, 1, 2];
   const rows = [4, 3, 2, 1];
+
+  const { appState } = useAppContext();
+  const { position } = appState;
+  const currPosition = position[position.length - 1];
+
+  const getClassName = (i, j) => {
+    let classes = getTileColor(i, j);
+
+    // console.log(`getTileColor(${i},${j})`);
+    // console.log(appState);
+    if (appState.candidateMoves?.find((m) => m[0] === i && m[1] === j)) {
+      appState.candidateMoves.find((move) => {
+        if (move[0] == i && move[1] == j) {
+          currPosition[i][j]
+            ? (classes += " attack-candidate")
+            : (classes += " move-candidate");
+        }
+      });
+    }
+
+    return classes;
+  };
 
   return (
     <div className="board">
@@ -13,7 +36,7 @@ function Board() {
       <div className="tiles">
         {rows.map((row, i) => {
           return cols.map((col, j) => {
-            return <div key={row + col} className={getTileColor(i, j)}></div>;
+            return <div key={row + col} className={getClassName(i, j)}></div>;
           });
         })}
       </div>

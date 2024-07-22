@@ -26,3 +26,15 @@
 .tile-dark {
   background-color: var(--dark-tile);
 }
+
+.move-candidate {
+  width: calc(var(--tile-size)-10);
+  height: calc(var(--tile-size)-10);
+  border: 5px solid blue;
+}
+
+.attack-candidate {
+  width: calc(var(--tile-size)-10);
+  height: calc(var(--tile-size)-10);
+  border: 5px solid red;
+}
