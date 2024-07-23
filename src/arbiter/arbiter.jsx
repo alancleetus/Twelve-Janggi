@@ -8,7 +8,7 @@ import {
 } from "./getMoves";
 
 const arbiter = {
-  getRegularMoves: function ({ currPosition, piece, row, col }) {
+  getValidMoves: function ({ currPosition, piece, row, col }) {
     if (piece.includes("Minister")) {
       return getMinisterMoves({ currPosition, piece, row, col });
     } else if (piece.includes("General")) {

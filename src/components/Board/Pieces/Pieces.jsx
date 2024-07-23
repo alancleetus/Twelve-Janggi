@@ -41,7 +41,7 @@ const Pieces = () => {
     const newPosition = copyPosition(currPosition);
     const { x, y } = calculateCoords(e);
 
-    // check for valid move
+    // check if drop position is part of valid moves list
     if (appState.candidateMoves?.find((m) => m[0] === x && m[1] === y)) {
       console.log(`Moving ${piece} from ${row}-${col} to ${x}-${y}`);
 

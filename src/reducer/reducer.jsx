@@ -66,8 +66,6 @@ export const reducer = (state, action) => {
             ...state,
             whiteCapturedPieces: action.payload.newCapturedList,
           };
-
-      break;
     }
     case actionTypes.CANDIDATE_MOVE: {
       return {
