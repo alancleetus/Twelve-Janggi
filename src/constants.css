@@ -4,6 +4,7 @@
   --dark-tile: #b48764;
   --bg-color: #242424;
   --text-color: #fff;
+  --checked-tile: yellow;
 }
 
 @media all and (max-width: 450px) {

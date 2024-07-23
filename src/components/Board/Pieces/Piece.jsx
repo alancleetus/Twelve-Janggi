@@ -17,6 +17,7 @@ export default function Piece({ row, col, piece }) {
 
     //if valid turn
     if (piece.includes(turn)) {
+      //generate candidate moves for the piece being moved
       const candidateMoves = arbiter.getValidMoves({
         currPosition,
         piece,

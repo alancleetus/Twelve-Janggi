@@ -1,12 +1,12 @@
 import "./Pieces.css";
 import Piece from "./Piece";
 import { useRef } from "react";
-import { copyPosition } from "../../../helper";
 import { useAppContext } from "../../../contexts/Context";
 import makeNewMove from "../../../reducer/actions/move";
 import capturePiece from "../../../reducer/actions/capture";
 import moveCaptured from "../../../reducer/actions/moveCaptured";
 import clearCandidates from "../../../reducer/actions/clearCandidateMoves";
+import arbiter from "../../../arbiter/arbiter";
 
 const Pieces = () => {
   const ref = useRef();
@@ -33,56 +33,54 @@ const Pieces = () => {
     return { x, y };
   };
 
-  const validateMove = (e) => {
+  const moveCaptivePiece = (index) => {
+    const newCapturedList = (
+      appState.turn === "white" ? currWhiteCaptured : currBlackCaptured
+    ).filter((piece, i) => {
+      return index != i;
+    });
+
+    dispatch(
+      moveCaptured({
+        newCapturedList: newCapturedList,
+      })
+    );
+  };
+
+  const validateThenPerformMove = (e) => {
     // position of piece being moved
     const [piece, row, col, index] = e.dataTransfer.getData("text").split(",");
-
-    //calculating new position
-    const newPosition = copyPosition(currPosition);
-    const { x, y } = calculateCoords(e);
+    const { x, y } = calculateCoords(e); //calculating new position
 
     // check if drop position is part of valid moves list
     if (appState.candidateMoves?.find((m) => m[0] === x && m[1] === y)) {
       console.log(`Moving ${piece} from ${row}-${col} to ${x}-${y}`);
 
       // if moving captured piece
-      if (row == -1 && col == -1) {
-        // remove captured piece from captured list
+      // remove captured piece from captured list
+      if (row == -1 && col == -1) moveCaptivePiece(index);
 
-        const newCapturedList = (
-          appState.turn === "white" ? currWhiteCaptured : currBlackCaptured
-        ).filter((piece, i) => {
-          return index != i;
-        });
+      const newPosition = arbiter.calculateNewPosition({
+        position: currPosition,
+        piece,
+        row,
+        col,
+        x,
+        y,
+      });
 
-        dispatch(
-          moveCaptured({
-            newCapturedList: newCapturedList,
-          })
-        );
-      }
+      // capture opponent piece
+      if (currPosition[x][y] !== "") dispatch(capturePiece({ piece, x, y }));
 
-      //moving board piece and not captured piece
-      if (row > -1 && col > -1) newPosition[row][col] = ""; //remove piece being moved from old position
-
-      //promoting if man reaches enemy land
-      if (piece.includes("Man") && (x == 0 || x == 3)) {
-        newPosition[x][y] = piece.replace("Man", "Feudal-Lord"); // promote man to feudal lord
-      } else newPosition[x][y] = piece; // place piece onto new position
-
-      if (currPosition[x][y] !== "") {
-        dispatch(capturePiece({ piece, x, y }));
-      }
-
+      // make move
       dispatch(makeNewMove({ newPosition }));
     }
-
-    dispatch(clearCandidates());
   };
 
   const onDrop = (e) => {
     e.preventDefault();
-    validateMove(e);
+    validateThenPerformMove(e);
+    dispatch(clearCandidates());
   };
 
   const dragOver = (e) => e.preventDefault();

@@ -38,3 +38,7 @@
   height: calc(var(--tile-size)-10);
   border: 5px solid red;
 }
+
+.checked {
+  background-color: var(--checked-tile);
+}

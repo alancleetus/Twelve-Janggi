@@ -118,6 +118,31 @@ const getValidMoves = ({ currPosition, piece, row, col, directions }) => {
   return moves;
 };
 
+const getKingPosition = (position, player) => {
+  let kingPos;
+  position.forEach((row, x) => {
+    row.forEach((col, y) => {
+      if (position[x][y].includes("King-" + player)) kingPos = [x, y];
+    });
+  });
+  return kingPos;
+};
+
+const getPieces = (position, color) => {
+  const pieces = [];
+  position.forEach((row, x) => {
+    row.forEach((piece, y) => {
+      if (piece.includes(color))
+        pieces.push({
+          piece: piece,
+          row: x,
+          col: y,
+        });
+    });
+  });
+  return pieces;
+};
+
 export {
   getMinisterMoves,
   getGeneralMoves,
@@ -125,4 +150,6 @@ export {
   getKingMoves,
   getFeudalLordMoves,
   getCapturedMoves,
+  getKingPosition,
+  getPieces,
 };

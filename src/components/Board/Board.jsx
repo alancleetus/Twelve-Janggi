@@ -4,6 +4,8 @@ import Pieces from "./Pieces/Pieces";
 import RowLabel from "./Labels/RowLabel";
 import ColLabel from "./Labels/ColLabel";
 import { useAppContext } from "../../contexts/Context";
+import arbiter from "../../arbiter/arbiter";
+import { getKingPosition } from "../../arbiter/getMoves";
 function Board() {
   const cols = [0, 1, 2];
   const rows = [4, 3, 2, 1];
@@ -27,7 +29,22 @@ function Board() {
       });
     }
 
+    const checkedTile = checkTile();
+
+    if (checkedTile && checkedTile[0] == i && checkedTile[1] == j)
+      classes += " checked";
+
     return classes;
+  };
+  const checkTile = () => {
+    const isInCheck = arbiter.isPlayerInCheck({
+      positionAfterMove: currPosition,
+      player: appState.turn,
+    });
+
+    if (isInCheck) return getKingPosition(currPosition, appState.turn);
+
+    return null;
   };
 
   return (
