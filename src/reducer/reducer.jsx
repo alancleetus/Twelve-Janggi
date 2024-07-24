@@ -79,6 +79,18 @@ export const reducer = (state, action) => {
         candidateMoves: [],
       };
     }
+    case actionTypes.GAME_WON: {
+      console.log(action.payload);
+      return {
+        ...state,
+        winner: action.payload.winner,
+      };
+    }
+    case actionTypes.NEW_GAME: {
+      return {
+        ...action.payload,
+      };
+    }
     default:
       return state;
   }

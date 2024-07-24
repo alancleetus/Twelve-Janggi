@@ -96,6 +96,83 @@ const arbiter = {
       return true;
     else return false;
   },
+  isCheckMate: function ({ currPosition, player, captivePieces }) {
+    const isInCheck = this.isPlayerInCheck({
+      positionAfterMove: currPosition,
+      player,
+    });
+
+    // is the king in check?
+    if (!isInCheck) return false;
+
+    const playerBoardPieces = getPieces(currPosition, player);
+
+    const availBoardPieceMoves = playerBoardPieces.reduce(
+      (accumulator, currentValue) =>
+        (accumulator = [
+          ...accumulator,
+          ...this.getPossibleMoves({
+            currPosition,
+            ...currentValue,
+          }),
+        ]),
+      []
+    );
+
+    // get tiles where captives can move into
+    const capturedMoves = this.getCapturedMoves({ currPosition });
+
+    // for each possible position check
+    // if moving piece into it will take the king out of check
+    let availCaptiveMoves = [];
+    if (captivePieces[0]) {
+      for (let i in capturedMoves) {
+        const positionAfterMove = simulateMovePiece({
+          position: currPosition,
+          piece: captivePieces[0], //only need to check for 1 single captive
+          row: -1,
+          col: -1,
+          x: capturedMoves[i][0],
+          y: capturedMoves[i][1],
+        });
+
+        const stillInCheck = this.isPlayerInCheck({
+          positionAfterMove,
+          player,
+        });
+        if (!stillInCheck)
+          //if not in check after trying new moves
+          availCaptiveMoves.push([capturedMoves[i][0], capturedMoves[i][1]]);
+      }
+    }
+
+    console.log({ availBoardPieceMoves, availCaptiveMoves });
+    if (
+      isInCheck &&
+      availBoardPieceMoves.length === 0 &&
+      availCaptiveMoves.length === 0
+    )
+      return true;
+
+    return false;
+  },
+  isKingInOpponentLand: function ({ player, currPosition, prevPosition }) {
+    // get curr king location
+    const currKingLocation = getKingPosition(currPosition, player);
+    // if curr king was already in the opponent territory last turn,
+    // then player wins
+    const prevKingLocation = getKingPosition(prevPosition, player);
+
+    console.log({ player, currKingLocation, prevKingLocation });
+    if (player == "black")
+      return (
+        currKingLocation[0] == 3 && currKingLocation[0] == prevKingLocation[0]
+      );
+    else
+      return (
+        currKingLocation[0] == 0 && currKingLocation[0] == prevKingLocation[0]
+      );
+  },
 };
 
 export default arbiter;

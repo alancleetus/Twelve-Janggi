@@ -58,7 +58,6 @@ function Board() {
         })}
       </div>
       <Pieces />
-
       <ColLabel cols={cols} />
     </div>
   );

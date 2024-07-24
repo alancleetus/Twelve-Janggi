@@ -2,6 +2,7 @@ import arbiter from "../arbiter/arbiter";
 import { useAppContext } from "../contexts/Context";
 import generateCandidateMoves from "../reducer/actions/generateCandidateMove";
 import "./Player.css";
+import clearCandidates from "../reducer/actions/clearCandidateMoves";
 
 const Player = ({ playerId }) => {
   const { appState, dispatch } = useAppContext();
@@ -23,8 +24,11 @@ const Player = ({ playerId }) => {
       dispatch(generateCandidateMoves({ newCandidateMoves: candidateMoves }));
     }
   };
+
   const dragEnd = (e) => {
     e.target.style.display = "block";
+
+    dispatch(clearCandidates());
   };
 
   return (

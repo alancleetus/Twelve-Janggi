@@ -76,11 +76,10 @@ const getCapturedMoves = ({ currPosition }) => {
   const moves = [];
 
   for (let i = 1; i <= 2; i++) {
-    for (let j = 0; j <= 3; j++) {
+    for (let j = 0; j <= 2; j++) {
       if (currPosition[i][j] == "") moves.push([i, j]);
     }
   }
-
   return moves;
 };
 

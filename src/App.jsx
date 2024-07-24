@@ -7,6 +7,8 @@ import AppContext from "./contexts/Context";
 import { reducer } from "./reducer/reducer";
 import { initGame } from "./constants";
 
+import GameEnds from "./components/GameEnds";
+
 function App() {
   const [appState, dispatch] = useReducer(reducer, initGame);
 
@@ -14,9 +16,15 @@ function App() {
   return (
     <AppContext.Provider value={providerState}>
       <div className="App">
-        <Player key="1" playerId="black" />
-        <Board />
-        <Player key="2" playerId="white" />
+        {appState.winner !== "" ? (
+          <GameEnds />
+        ) : (
+          <>
+            <Player key="1" playerId="black" />
+            <Board />
+            <Player key="2" playerId="white" />
+          </>
+        )}
       </div>
     </AppContext.Provider>
   );

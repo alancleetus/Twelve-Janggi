@@ -7,6 +7,7 @@ import capturePiece from "../../../reducer/actions/capture";
 import moveCaptured from "../../../reducer/actions/moveCaptured";
 import clearCandidates from "../../../reducer/actions/clearCandidateMoves";
 import arbiter from "../../../arbiter/arbiter";
+import gameWon from "../../../reducer/actions/gameWon";
 
 const Pieces = () => {
   const ref = useRef();
@@ -74,12 +75,42 @@ const Pieces = () => {
 
       // make move
       dispatch(makeNewMove({ newPosition }));
+
+      //check if enemy in checkmate
+      const currPlayer = appState.turn;
+      const enemy = currPlayer === "white" ? "black" : "white";
+
+      const captivePieces =
+        enemy === "white" ? currWhiteCaptured : currBlackCaptured;
+
+      const checkMate = arbiter.isCheckMate({
+        currPosition: newPosition,
+        player: enemy,
+        captivePieces,
+      });
+
+      if (checkMate) {
+        console.log("checkmate:" + checkMate);
+        dispatch(gameWon({ winner: currPlayer }));
+      }
+
+      const gameOver = arbiter.isKingInOpponentLand({
+        player: enemy,
+        currPosition: newPosition,
+        prevPosition: currPosition,
+      });
+
+      if (gameOver) {
+        console.log("gameover:" + gameOver);
+        dispatch(gameWon({ winner: enemy }));
+      }
     }
   };
 
   const onDrop = (e) => {
     e.preventDefault();
     validateThenPerformMove(e);
+
     dispatch(clearCandidates());
   };
 

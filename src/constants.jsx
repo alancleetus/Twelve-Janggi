@@ -6,4 +6,5 @@ export const initGame = {
   whiteCapturedPieces: [],
   blackCapturedPieces: [],
   candidateMoves: [],
+  winner: "",
 };
