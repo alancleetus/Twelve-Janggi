@@ -15,9 +15,21 @@
   margin-bottom: 10px;
 }
 .piece-icon {
-  max-width: 50px;
-  max-height: 50px;
+  max-width: calc(var(--tile-size) * 0.5);
+  max-height: calc(var(--tile-size) * 0.5);
   text-align: center;
   border: 1px solid red;
   margin-right: 2px;
+}
+
+@media all and (max-width: 330px) {
+  :root {
+    --tile-size: 50px;
+  }
+}
+
+@media all and (max-height: 713px) {
+  :root {
+    --tile-size: 50px;
+  }
 }

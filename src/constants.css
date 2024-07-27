@@ -7,7 +7,24 @@
   --checked-tile: yellow;
 }
 
-@media all and (max-width: 450px) {
+@media all and (max-width: 330px) {
+  :root {
+    --tile-size: 75px;
+  }
+}
+@media all and (max-width: 250px) {
+  :root {
+    --tile-size: 50px;
+  }
+}
+
+@media all and (max-height: 713px) {
+  :root {
+    --tile-size: 75px;
+  }
+}
+
+@media all and (max-height: 610px) {
   :root {
     --tile-size: 50px;
   }
