@@ -9,4 +9,4 @@
 
 [TRY IT](https://twelve-janggi.netlify.app/)
 
-![demo](Janggi Demo.gif)
+![demo](./Janggi%20Demo.gif)
